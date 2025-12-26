@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>🎆 Đếm Ngược Giao Thừa 🎆</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    background: radial-gradient(circle at bottom, #020024, #090979, #000);
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+/* Vũ trụ */
+.stars {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(1px 1px at 20% 30%, white, transparent),
+      radial-gradient(2px 2px at 80% 70%, white, transparent),
+      radial-gradient(1px 1px at 50% 50%, white, transparent);
+    animation: starMove 60s linear infinite;
+}
+
+@keyframes starMove {
+    to { transform: translateY(-2000px); }
+}
+
+/* Trung tâm */
+.center {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+h1 {
+    font-size: 3em;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { color: gold; text-shadow: 0 0 10px red; }
+    to { color: cyan; text-shadow: 0 0 20px yellow; }
+}
+
+/* Countdown */
+#countdown {
+    font-size: 2em;
+    margin: 20px 0;
+    color: #ff0;
+}
+
+/* Lời chúc */
+.message {
+    font-size: 1.3em;
+    opacity: 0;
+    animation: showText 2s forwards;
+}
+
+@keyframes showText {
+    to { opacity: 1; }
+}
+
+/* Tuyết / kim tuyến */
+.snow {
+    position: fixed;
+    top: -10px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh); }
+}
+
+/* Pháo hoa */
+.firework {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    animation: explode 2s infinite;
+}
+
+@keyframes explode {
+    0% { box-shadow: 0 0 red; }
+    100% {
+        box-shadow:
+          120px 0 red,
+          -120px 0 yellow,
+          0 120px cyan,
+          0 -120px pink,
+          80px 80px orange,
+          -80px -80px lime;
+        opacity: 0;
+    }
+}
+
+/* Xoay nhẹ */
+.rotate {
+    animation: rotate360 40s linear infinite;
+}
+
+@keyframes rotate360 {
+    to { transform: rotate(360deg); }
+}
+</style>
+</head>
+
+<body>
+<div class="stars"></div>
+
+<div class="center rotate">
+    <h1 id="title">🎉 ĐẾM NGƯỢC GIAO THỪA 🎉</h1>
+
+    <div id="countdown">Đang tính toán...</div>
+
+    <div class="message" style="animation-delay:1s; color:#ff69b4;">
+        🌸 Tạm biệt năm cũ
+    </div>
+    <div class="message" style="animation-delay:3s; color:#0ff;">
+        🚀 Chào đón năm mới tràn đầy hy vọng
+    </div>
+    <div class="message" style="animation-delay:5s; color:#7CFC00;">
+        ✨ Bình an – Hạnh phúc – Thành công ✨
+    </div>
+</div>
+
+<!-- 🔊 NHẠC NĂM MỚI – CHỈ CẦN ĐỔI LINK -->
+<audio id="music" autoplay loop>
+    <!-- 🔁 DÁN LINK NHẠC BẠN MUỐN Ở ĐÂY -->
+    <source src="https://cdn.pixabay.com/download/audio/2022/12/20/audio_5fa9fd23f6.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// ================= COUNTDOWN =================
+const countdownEl = document.getElementById("countdown");
+const titleEl = document.getElementById("title");
+
+// Lấy năm mới tiếp theo
+const now = new Date();
+const newYear = new Date(now.getFullYear() + 1, 0, 1, 0, 0, 0);
+
+setInterval(() => {
+    const current = new Date();
+    const diff = newYear - current;
+
+    if (diff <= 0) {
+        titleEl.innerHTML = "🎆 HAPPY NEW YEAR 🎆";
+        countdownEl.innerHTML = "🎉 00 : 00 : 00 🎉";
+        return;
+    }
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    countdownEl.innerHTML =
+        `${hours} Giờ : ${minutes} Phút : ${seconds} Giây`;
+}, 1000);
+
+// ================= TUYẾT =================
+for (let i = 0; i < 60; i++) {
+    let snow = document.createElement("div");
+    snow.className = "snow";
+    snow.innerHTML = "✨";
+    snow.style.left = Math.random() * 100 + "vw";
+    snow.style.animationDuration = 3 + Math.random() * 5 + "s";
+    snow.style.fontSize = 10 + Math.random() * 20 + "px";
+    document.body.appendChild(snow);
+}
+
+// ================= PHÁO HOA =================
+setInterval(() => {
+    let fw = document.createElement("div");
+    fw.className = "firework";
+    fw.style.left = Math.random() * 100 + "vw";
+    fw.style.top = Math.random() * 100 + "vh";
+    document.body.appendChild(fw);
+    setTimeout(() => fw.remove(), 2000);
+}, 1200);
+</script>
+
+</body>
+</html>
